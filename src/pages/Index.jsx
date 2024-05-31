@@ -18,7 +18,7 @@ const Index = () => {
         navigate('/dashboard');
       }
     });
-    return () => {
+  return () => {
       authListener?.unsubscribe();
     };
   }, [navigate]);
@@ -39,19 +39,19 @@ const Index = () => {
   return (
     <Flex direction="column" align="center" justify="center" minH="100vh" bg="gray.50" p={4}>
       {!user ? (
-        <Box textAlign="center" p={6} boxShadow="lg" bg="white" borderRadius="md" maxW="sm" w="full">
-          <Heading mb={4} fontSize="xl" fontWeight="bold">Welcome to Our App</Heading>
+        <Box textAlign="center" p={6} boxShadow="lg" bg="white" borderRadius="md">
+          <Heading mb={6}>Welcome to Our App</Heading>
           <VStack spacing={4}>
-            <Button leftIcon={<FaGoogle />} colorScheme="teal" onClick={signInWithGoogle} size="md" fontSize="sm" py={4} px={6}>
+            <Button leftIcon={<FaGoogle />} colorScheme="teal" onClick={signInWithGoogle} size="lg">
               Sign in with Google
             </Button>
           </VStack>
         </Box>
       ) : (
         <Box textAlign="center">
-          <Heading mb={4} fontSize="xl" fontWeight="bold">Dashboard</Heading>
+          <Heading mb={6}>Dashboard</Heading>
           <Text mb={4}>Welcome, {user.email}</Text>
-          <Button colorScheme="teal" onClick={signOut} size="md" fontSize="sm" py={4} px={6}>
+          <Button colorScheme="teal" onClick={signOut}>
             Sign Out
           </Button>
         </Box>
