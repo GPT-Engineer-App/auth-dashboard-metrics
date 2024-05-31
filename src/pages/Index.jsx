@@ -26,6 +26,9 @@ const Index = () => {
   const signInWithGoogle = async () => {
     await supabase.auth.signInWithOAuth({
       provider: 'google',
+      options: {
+        redirectTo: 'https://bwfvmnyldwrhcvxdrfdt.supabase.co/auth/v1/callback'
+      }
     });
   };
 
