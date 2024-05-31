@@ -12,12 +12,20 @@ const Index = () => {
     const session = supabase.auth.session();
     setUser(session?.user ?? null);
 
-    supabase.auth.onAuthStateChange((_event, session) => {
+    if (session?.user) {
+      navigate('/dashboard');
+    }
+
+    const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
       if (session?.user) {
         navigate('/dashboard');
       }
     });
+
+    return () => {
+      authListener?.unsubscribe();
+    };
   }, [navigate]);
 
   const signInWithGoogle = async () => {
