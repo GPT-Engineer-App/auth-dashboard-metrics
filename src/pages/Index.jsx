@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Box, Button, Flex, Heading, Text } from '@chakra-ui/react';
 import { FaGoogle } from 'react-icons/fa';
 import { supabase } from '../lib/supabaseClient'; // Assuming you have a supabaseClient.js file for initializing Supabase
+import { useNavigate } from 'react-router-dom';
 
 const Index = () => {
   const [user, setUser] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const session = supabase.auth.session();
@@ -12,17 +14,16 @@ const Index = () => {
 
     supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
+      if (session?.user) {
+        navigate('/dashboard');
+      }
     });
-  }, []);
+  }, [navigate]);
 
   const signInWithGoogle = async () => {
     await supabase.auth.signIn({
       provider: 'google',
     });
-  };
-
-  const signOut = async () => {
-    await supabase.auth.signOut();
   };
 
   return (
@@ -36,11 +37,7 @@ const Index = () => {
         </Box>
       ) : (
         <Box textAlign="center">
-          <Heading mb={6}>Dashboard</Heading>
-          <Text mb={4}>Welcome, {user.email}</Text>
-          <Button colorScheme="teal" onClick={signOut}>
-            Sign Out
-          </Button>
+          <Heading mb={6}>Redirecting to Dashboard...</Heading>
         </Box>
       )}
     </Flex>
