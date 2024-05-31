@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Button, Flex, Heading, Text } from '@chakra-ui/react';
+import { Box, Button, Flex, Heading, Text, VStack } from '@chakra-ui/react';
 import { FaGoogle } from 'react-icons/fa';
-import { supabase } from '../lib/supabaseClient'; // Assuming you have a supabaseClient.js file for initializing Supabase
+import { supabase } from '../lib/supabaseClient';
 import { useNavigate } from 'react-router-dom';
 
 const Index = () => {
@@ -31,13 +31,15 @@ const Index = () => {
   };
 
   return (
-    <Flex direction="column" align="center" justify="center" minH="100vh" bg="gray.50">
+    <Flex direction="column" align="center" justify="center" minH="100vh" bg="gray.50" p={4}>
       {!user ? (
-        <Box textAlign="center">
+        <Box textAlign="center" p={6} boxShadow="lg" bg="white" borderRadius="md">
           <Heading mb={6}>Welcome to Our App</Heading>
-          <Button leftIcon={<FaGoogle />} colorScheme="teal" onClick={signInWithGoogle}>
-            Sign in with Google
-          </Button>
+          <VStack spacing={4}>
+            <Button leftIcon={<FaGoogle />} colorScheme="teal" onClick={signInWithGoogle} size="lg">
+              Sign in with Google
+            </Button>
+          </VStack>
         </Box>
       ) : (
         <Box textAlign="center">
