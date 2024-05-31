@@ -9,19 +9,22 @@ const Index = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const session = supabase.auth.session();
+    const session = supabase.auth.getSession();
     setUser(session?.user ?? null);
 
-    supabase.auth.onAuthStateChange((_event, session) => {
+    const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
       if (session?.user) {
         navigate('/dashboard');
       }
     });
+  return () => {
+      authListener?.unsubscribe();
+    };
   }, [navigate]);
 
   const signInWithGoogle = async () => {
-    await supabase.auth.signIn({
+    await supabase.auth.signInWithOAuth({
       provider: 'google',
     });
   };
